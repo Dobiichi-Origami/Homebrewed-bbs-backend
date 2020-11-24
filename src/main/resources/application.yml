@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    username: userName
+    password: password
+    url: url
+    driver-class-name: driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
