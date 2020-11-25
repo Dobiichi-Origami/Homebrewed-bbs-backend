@@ -45,12 +45,22 @@ public class ResponseService {
     }
 
     public void addResponse(Integer tweetId, Integer holderId, String content){
+        Tweet tweet = tweetRepository.findAllByTweetId(tweetId).get(0);
+        User user = userRepository.findAllByUserId(holderId).get(0);
+
         Response response = new Response();
         response.setTweetId(tweetId);
         response.setHolderId(holderId);
         response.setContent(content);
         response.setPostTime(new Date());
         responseRepository.saveAndFlush(response);
+
+        List<Response> responses = responseRepository.findAll();
+        response = responses.get(responses.size()-1);
+        tweet.getResponses().add(response);
+        user.getResponses().add(response);
+        tweetRepository.saveAndFlush(tweet);
+        userRepository.saveAndFlush(user);
     }
 
     public void changeResponse(Integer responseId, String content){

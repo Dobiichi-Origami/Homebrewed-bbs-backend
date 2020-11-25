@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -56,11 +57,19 @@ public class TweetService {
 
     public void addTweet(String title, String content, Integer holderId){
         Tweet tweet = new Tweet();
+        User user = userRepository.findAllByUserId(holderId).get(0);
+
         tweet.setContent(content);
         tweet.setTitle(title);
         tweet.setHolderId(holderId);
         tweet.setResponses(new ArrayList<>());
+        tweet.setPostTime(new Date());
         tweetRepository.saveAndFlush(tweet);
+
+        List<Tweet> tweets = tweetRepository.findAll();
+        tweet = tweets.get(tweets.size()-1);
+        user.getTweets().add(tweet);
+        userRepository.saveAndFlush(user);
     }
 
 }

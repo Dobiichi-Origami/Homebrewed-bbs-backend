@@ -9,11 +9,10 @@ import com.twintails.server.Service.UserService;
 import com.twintails.server.dao.ResponseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class AdvisorController {
@@ -88,9 +87,9 @@ public class AdvisorController {
         return tweetService.findTweetByTweetId(tweetId).get(0);
     }
 
-    @RequestMapping("/postATweet")
-    public void postATweet(@RequestParam(value = "title") String title, @RequestParam(value = "content") String content, @RequestParam(value = "holderId") Integer holderId){
-        tweetService.addTweet(title,content,holderId);
+    @RequestMapping(value = "/postATweet", method = RequestMethod.POST)
+    public void postATweet(@RequestBody Tweet tweet){
+        tweetService.addTweet(tweet.getTitle(),tweet.getContent(),tweet.getHolderId());
     }
 
     @RequestMapping("/deleteATweet")
@@ -110,14 +109,14 @@ public class AdvisorController {
         return responseService.deleteResponseByResponseId(responseId);
     }
 
-    @RequestMapping("/postResponse")
-    public void postResponse(@RequestParam(value = "tweetId") Integer tweetId, @RequestParam(value = "holderId") Integer holderId, @RequestParam(value = "content") String content){
-        responseService.addResponse(tweetId, holderId, content);
+    @RequestMapping(value = "/postResponse", method = RequestMethod.POST)
+    public void postResponse(@RequestBody Response response){
+        responseService.addResponse(response.getTweetId(), response.getHolderId(), response.getContent());
     }
 
-    @RequestMapping("/changeResponse")
-    public void changeResponse(@RequestParam(value = "responseId") Integer responseId, @RequestParam(value = "content") String content){
-        responseService.changeResponse(responseId, content);
+    @RequestMapping(value = "/changeResponse", method = RequestMethod.POST)
+    public void changeResponse(@RequestBody Response response){
+        responseService.changeResponse(response.getResponseId(), response.getContent());
     }
 
 }
