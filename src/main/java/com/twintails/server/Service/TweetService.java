@@ -26,6 +26,10 @@ public class TweetService {
     @Autowired
     private ResponseService responseService;
 
+    public List<Tweet> findAllTweets(){
+        return tweetRepository.findAll();
+    }
+
     public List<Tweet> findTweetByTweetId(Integer tweetId){
         return tweetRepository.findAllByTweetId(tweetId);
     }

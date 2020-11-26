@@ -72,6 +72,11 @@ public class AdvisorController {
 
     //帖子的增删改(后面再实现)查
 
+    @RequestMapping("/findAllTweets")
+    public List<Tweet> findAllTweets(){
+        return tweetService.findAllTweets();
+    }
+
     @RequestMapping("/findTweetsByTitle")
     public List<Tweet> findTweetsByTitle(@RequestParam(value = "title") String title){
         return tweetService.findTweetByTitle(title);
