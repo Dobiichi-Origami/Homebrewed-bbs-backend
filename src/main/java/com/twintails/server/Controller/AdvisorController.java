@@ -50,6 +50,11 @@ public class AdvisorController {
         return userService.findUserByUserId(userId).get(0);
     }
 
+    @RequestMapping("/findUserByUserAccount")
+    public User findUserByAccount(@RequestParam(value = "userAccount") String userAccount){
+        return userService.findUserByUserAccount(userAccount).get(0);
+    }
+
     @RequestMapping("/findUserByUserName")
     public List<User> findUser(@RequestParam(value = "userName") String userName){
         return userService.findUserByUserName(userName);
